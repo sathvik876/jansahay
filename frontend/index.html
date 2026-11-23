@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="jansahay-api" content="">
+  <meta name="theme-color" content="#174bb8">
+  <title>JanSahay AI | Citizen Assistance</title>
+  <meta name="description" content="Find government schemes, check eligibility and understand application steps.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header><div class="wrap top">
+    <a href="#assistant" class="brand"><span class="mark" aria-hidden="true">J</span><span>JanSahay AI<small>CITIZEN ASSISTANCE</small></span></a>
+    <div class="top-actions"><label><span class="sr">Response language</span><select id="language"><option value="en">English</option><option value="hi">हिन्दी</option><option value="te">తెలుగు</option></select></label><button data-page="help" class="quiet">Help</button></div>
+  </div></header>
+  <main class="wrap">
+    <section class="hero">
+      <h1>Government support,<br>made simple.</h1>
+      <p>Find schemes, check eligibility, and understand application steps in your language.</p>
+    </section>
+    <nav class="features" aria-label="Citizen services">
+      <button data-page="assistant"><span aria-hidden="true" class="icon">◉</span><strong>AI Assistant</strong><small>Ask questions</small></button>
+      <button data-page="eligibility"><span aria-hidden="true" class="icon">✓</span><strong>Check Eligibility</strong><small>Find matching schemes</small></button>
+      <button data-page="documents"><span aria-hidden="true" class="icon">▤</span><strong>Analyze Documents</strong><small>Understand notices</small></button>
+      <button data-page="schemes"><span aria-hidden="true" class="icon">⌕</span><strong>Explore Schemes</strong><small>Browse benefits</small></button>
+    </nav>
+    <section id="assistant" class="panel">
+      <div class="panel-head"><h2>JanSahay Assistant</h2><button class="quiet" id="history-toggle">History</button><button class="secondary" id="new">＋ New chat</button></div>
+      <div id="history" class="history" hidden>
+        <label><input id="save" type="checkbox"> Save conversations on this device</label>
+        <button id="clear" class="quiet">Clear saved chats</button>
+        <ul id="saved-list"></ul>
+      </div>
+      <div id="welcome" class="welcome">
+        <span class="icon" aria-hidden="true">◉</span>
+        <h3>How can I help you today?</h3>
+        <p>Ask about scholarships, pensions, farming schemes, or government services.</p>
+        <div id="suggestions" class="suggestions"></div>
+      </div>
+      <div id="messages" class="messages" role="log" aria-label="Conversation"></div>
+      <div id="chat-status" class="status" role="status"></div>
+      <div class="chat-tools">
+        <form id="chat-form" class="composer">
+          <button id="chat-upload" class="quiet" type="button">Upload</button>
+          <label class="sr" for="question">Your question</label><input id="question" maxlength="1200" placeholder="Type your question..." required>
+          <button id="send" class="primary">Send <span aria-hidden="true">↗</span></button>
+        </form>
+      </div>
+    </section>
+    <section id="eligibility" class="panel content" hidden>
+      <h2>Check Eligibility</h2><p>Get a preliminary indication based on the conditions listed here. Use the official portal to confirm eligibility.</p>
+      <form id="eligibility-form">
+        <div class="fields"><label>Scheme<select id="eligibility-scheme"><option value="">All schemes</option></select></label>
+        <label>State or Union Territory<select id="state"><option value="">All India</option></select></label>
+        <label>Age<input id="age" type="number" min="0" max="130" placeholder="In years"></label>
+        <label>Annual family income<input id="income" type="number" min="0" max="1000000000" placeholder="In rupees"></label>
+        <label>Occupation or group<select id="occupation"><option value="">Any</option><option>Students</option><option>Farmers</option><option>Senior citizens</option><option>Workers</option><option>Households</option></select></label></div>
+        <div id="conditions" class="fields"></div>
+        <button class="primary">Check eligibility</button>
+      </form><div id="eligibility-status" class="status" role="status"></div><div id="eligibility-results" class="cards"></div>
+    </section>
+    <section id="documents" class="panel content" hidden>
+      <h2>Analyze Documents</h2><p>Upload a public government notice as a PDF, JPEG or PNG up to 5 MB. Remove personal information before uploading.</p>
+      <form id="document-form"><label class="drop">Choose a document<input type="file" id="file" accept=".pdf,.jpg,.jpeg,.png" required></label>
+      <p><label><input id="consent" type="checkbox" required> I agree to send this file to Google Gemini for analysis.</label></p>
+      <button id="analyze" class="primary">Analyze notice</button></form>
+      <div id="document-status" class="status" role="status"></div><article id="summary" class="summary" hidden></article>
+    </section>
+    <section id="schemes" class="panel content" hidden>
+      <h2>Explore Government Schemes</h2><p>Choose a state or Union Territory to see its schemes alongside national schemes.</p>
+      <form id="search-form" class="fields"><label>Search schemes<input id="search" type="search" placeholder="Try scholarships or crop insurance"></label><label>Category<select id="category"><option value="">All categories</option></select></label><label>State or Union Territory<select id="scheme-state"><option value="">All India</option></select></label><button class="primary">Search schemes</button></form>
+      <h3>Available schemes</h3><div id="search-status" class="status" role="status"></div><div id="scheme-results" class="cards" aria-busy="false"></div>
+    </section>
+    <section id="checklist" class="panel content" hidden>
+      <button data-page="schemes" class="quiet">← Explore schemes</button><h2>Application Checklist</h2>
+      <div id="checklist-content" aria-live="polite"></div>
+    </section>
+    <section id="help" class="panel content" hidden>
+      <h2>Help</h2>
+      <p>Use the language menu to choose English, Hindi or Telugu for assistant responses and document explanations. Scheme records and form labels are shown in English.</p>
+      <p>Chat history is optional and stored on this device. Clear it from the History panel at any time. Enter no identity numbers or banking details in JanSahay.</p>
+      <p>Check the official source and application portal for current conditions and dates.</p>
+    </section>
+  </main>
+  <footer class="wrap">
+    <strong>JanSahay AI</strong><span>Independent informational project. This is not an official government service.</span>
+    <nav aria-label="Footer">
+      <button class="quiet" data-info="privacy">Privacy Policy</button>
+      <button class="quiet" data-info="about">About</button>
+      <button class="quiet" data-info="contact">Contact</button>
+    </nav>
+  </footer>
+  <dialog id="info-dialog" aria-labelledby="info-title">
+    <h2 id="info-title"></h2><p id="info-copy"></p>
+    <div class="actions" id="info-actions"></div>
+    <form method="dialog"><button class="secondary">Close</button></form>
+  </dialog>
+  <dialog id="report-dialog" aria-labelledby="report-title">
+    <form id="report-form">
+      <h2 id="report-title">Report an issue</h2><p id="report-target"></p>
+      <label>Reason<select id="report-reason" required>
+        <option value="">Choose a reason</option><option>Outdated information</option>
+        <option>Incorrect information</option><option>Broken official link</option><option>Other</option>
+      </select></label>
+      <label>What should we review?<textarea id="report-details" rows="4" maxlength="1000" required></textarea></label>
+      <p class="hint">Include the relevant detail or public source. Leave out names, identity numbers, and other personal information.</p>
+      <div id="report-status" class="status" role="status"></div>
+      <div class="actions"><button id="report-submit" class="primary">Submit report</button><button id="report-close" type="button" class="secondary">Close</button></div>
+    </form>
+  </dialog>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
